@@ -7,4 +7,3 @@ const output = document.getElementById("output");
 btn.addEventListener("click", () => {
   output.textContent = `Hello, ${prompt("What is your name?")}!`;
 });
-
