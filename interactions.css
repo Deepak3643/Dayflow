@@ -1,6 +1,7 @@
 /* Profile dropdown */
 .profile { position: relative; }
-.avatar { border: 0; cursor: pointer; }
+.avatar { overflow: hidden; padding: 0; border: 0; cursor: pointer; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
 .profile-menu { display: none; position: absolute; z-index: 5; top: 46px; right: 0; width: 190px; padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; box-shadow: 0 12px 30px #26352920; }
 .profile-menu.open { display: grid; gap: 7px; }
 .profile-menu strong { font-size: 13px; }.profile-menu span { color: var(--muted); font-size: 11px; }.profile-menu hr { width: 100%; margin: 6px 0; border: 0; border-top: 1px solid var(--line); }.profile-menu button { padding: 5px 0; border: 0; background: none; color: var(--ink); cursor: pointer; font: 12px 'DM Sans'; text-align: left; }

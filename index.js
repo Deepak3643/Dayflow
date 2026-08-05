@@ -3,6 +3,28 @@ const progressText = document.getElementById('progress-text');
 const routineDialog = document.getElementById('routine-dialog');
 const accountDialog = document.getElementById('account-dialog');
 let selectedDate = new Date();
+let user = JSON.parse(localStorage.getItem('dayflow-user') || 'null');
+
+if (!user?.signedIn) window.location.replace('login.html');
+
+function setAvatar(name, photo = user?.photo) {
+  const button = document.getElementById('profile-button');
+  button.replaceChildren();
+  if (photo) {
+    const image = document.createElement('img');
+    image.src = photo;
+    image.alt = `${name}'s profile picture`;
+    button.append(image);
+  } else button.textContent = name.split(' ').map(part => part[0]).slice(0, 2).join('').toUpperCase();
+}
+
+if (user) {
+  document.querySelector('.profile-menu strong').textContent = user.name;
+  document.querySelector('.profile-menu span').textContent = user.email;
+  document.getElementById('account-name').value = user.name;
+  document.getElementById('account-email').value = user.email;
+  setAvatar(user.name);
+}
 
 function toast(message) {
   const box = document.getElementById('toast');
@@ -75,15 +97,23 @@ profileMenu.addEventListener('click', event => {
   if (!action) return;
   profileMenu.classList.remove('open');
   if (action === 'profile') accountDialog.showModal();
-  else toast(action === 'settings' ? 'Settings are ready to customize next.' : 'You are signed out of this demo.');
+  else if (action === 'settings') toast('Settings are ready to customize next.');
+  else { localStorage.removeItem('dayflow-user'); window.location.href = 'login.html'; }
 });
 document.getElementById('notification-button').addEventListener('click', () => toast('You are all caught up — great work!'));
 accountDialog.addEventListener('close', () => {
   if (accountDialog.returnValue !== 'default') return;
   const name = document.getElementById('account-name').value.trim() || 'Deepak Kumar';
+  const email = document.getElementById('account-email').value.trim();
+  const photo = document.getElementById('account-photo').files[0];
   document.querySelector('.profile-menu strong').textContent = name;
-  profileButton.textContent = name.split(' ').map(part => part[0]).slice(0, 2).join('').toUpperCase();
-  toast('Profile saved.');
+  document.querySelector('.profile-menu span').textContent = email;
+  user = { ...user, name, email, signedIn: true };
+  if (photo) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => { user.photo = reader.result; localStorage.setItem('dayflow-user', JSON.stringify(user)); setAvatar(name); toast('Profile and picture saved.'); });
+    reader.readAsDataURL(photo);
+  } else { localStorage.setItem('dayflow-user', JSON.stringify(user)); setAvatar(name); toast('Profile saved.'); }
 });
 
 const habitKey = 'dayflow-habits-v2';

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in · Dayflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <main class="login-shell">
+    <a class="brand" href="login.html"><span>d</span>dayflow</a>
+    <section class="login-card">
+      <p class="eyebrow" id="form-eyebrow">WELCOME BACK</p>
+      <h1 id="form-title">Make today <em>count.</em></h1>
+      <p class="subtext" id="form-subtext">Sign in to continue building your daily rhythm.</p>
+      <div class="auth-tabs" role="tablist" aria-label="Authentication options">
+        <button class="auth-tab active" type="button" data-mode="signin" role="tab">Sign in</button>
+        <button class="auth-tab" type="button" data-mode="signup" role="tab">Sign up</button>
+      </div>
+
+      <form id="auth-form">
+        <label class="signup-only">Full name<input id="full-name" type="text" placeholder="Your full name" autocomplete="name"></label>
+        <label id="identity-label">Username or email<input id="identity" type="text" required placeholder="Your username or email" autocomplete="username"></label>
+        <label>Password<input id="password" type="password" required minlength="4" placeholder="••••••••" autocomplete="current-password"></label>
+        <button type="submit" id="submit-button">Sign in <span>→</span></button>
+      </form>
+
+      <p class="form-message" id="form-message" role="status"></p>
+    </section>
+  </main>
+  <script src="login.js"></script>
+</body>
+</html>
