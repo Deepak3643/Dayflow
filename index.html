@@ -1,30 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Project</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dayflow · Routine Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="interactions.css">
 </head>
 <body>
-    <h2>Welcome to the Local Repository</h2>
-    <br>This is a dropdown menu (dropdown)
-    <select>
-        <option value="option1">HTML</option>
-        <option value="option2">CSS</option>
-        <option value="option3">JavaScript</option>
-    </select>
-    <br>This is new feature (button)
-    <button type="button" onclick="window.location.href='https://roadmap.sh/'">Get Roadmap!</button>
-    <br>This site takes you to the <i><b>Roadmap.sh</b></i> site that helps you get and understand the roadmaps to learn various languages and technologies. It also provides you with the best resources to learn from. You can also find the roadmap for your desired language or technology and start learning it.
-    <br>Thank you!!
-    
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">d</span>dayflow</a>
+      <div class="date-picker"><button id="previous-day" aria-label="Previous day">‹</button><span id="today-label"></span><button id="next-day" aria-label="Next day">›</button></div>
+      <div class="profile"><button class="notification" id="notification-button" aria-label="Notifications">♧</button><button class="avatar" id="profile-button" aria-haspopup="true" aria-expanded="false">DK</button><div class="profile-menu" id="profile-menu"><strong>Deepak Kumar</strong><span>deepak@example.com</span><hr><button data-action="profile">My profile</button><button data-action="settings">Settings</button><button data-action="signout">Sign out</button></div></div>
+    </header>
 
-    <button id="prompt-btn">Show Prompt</button>
-    <p id="output">Hello, User!</p>
-    <script src="index.js">
-    
-    </script>
+    <section class="hero">
+      <div>
+        <p class="eyebrow" id="day-caption">YOUR DAY</p>
+        <h1>Make today <em>count.</em></h1>
+        <p class="intro">Small moments, done with intention. You’ve got this.</p>
+      </div>
+      <div class="daily-score">
+        <div class="score-ring"><span id="score-number">60</span><small>%</small></div>
+        <div><p class="eyebrow">DAILY PROGRESS</p><strong id="progress-text">3 of 5 complete</strong><p class="score-note">Keep your streak alive!</p></div>
+      </div>
+    </section>
 
+    <section class="dashboard-grid">
+      <section class="card routines-card">
+        <div class="section-heading"><div><p class="eyebrow">TODAY'S ROUTINE</p><h2>Good morning, Deepak</h2></div><button class="text-button" id="add-routine">+ Add routine</button></div>
+        <div class="routine-list" id="routine-list">
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">07:00</span><span class="routine-name">Morning meditation</span><span class="routine-tag calm">Mindful</span></label>
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">07:20</span><span class="routine-name">Movement & stretch</span><span class="routine-tag active">Active</span></label>
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">08:00</span><span class="routine-name">Plan the day</span><span class="routine-tag focus">Focus</span></label>
+          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">12:30</span><span class="routine-name">Screen-free lunch</span><span class="routine-tag calm">Mindful</span></label>
+          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">18:00</span><span class="routine-name">Read for 30 minutes</span><span class="routine-tag focus">Focus</span></label>
+        </div>
+        <button class="complete-button" id="complete-all">Complete all routines <span>→</span></button>
+      </section>
+
+      <aside class="right-column">
+        <section class="card activity-card"><div class="section-heading"><div><p class="eyebrow">ACTIVITY</p><h2>Your energy today</h2></div><button class="more" aria-label="More options">•••</button></div>
+          <div class="chart"><div class="chart-labels"><span>100%</span><span>50%</span><span>0%</span></div><div class="bars"><i style="--h:36%"></i><i style="--h:59%"></i><i style="--h:42%"></i><i class="today" style="--h:82%"></i><i style="--h:48%"></i><i style="--h:66%"></i><i style="--h:31%"></i></div><div class="week"><span>M</span><span>T</span><span>W</span><span class="selected">T</span><span>F</span><span>S</span><span>S</span></div></div>
+          <div class="activity-summary"><span><b>7,842</b> steps</span><span><b>42</b> active mins</span><span><b>2,180</b> kcal</span></div>
+        </section>
+        <section class="quote-card"><span class="quote-mark">“</span><p>Success is the sum of small efforts, repeated day in and day out.</p><small>— ROBERT COLLIER</small></section>
+      </aside>
+    </section>
+
+    <section class="bottom-grid">
+      <section class="card habits-card"><div class="section-heading"><div><p class="eyebrow">HABIT STREAKS</p><h2>Keep the momentum going</h2></div><button class="text-button" id="reset-habits">Reset today</button></div><div class="habit-grid"><button class="habit" data-habit="Early riser" data-streak="12"><span class="habit-icon orange">☀</span><b>Early riser</b><small><strong>12</strong> day streak</small><div class="mini-progress"><i style="width:78%"></i></div><span class="habit-status">Check in</span></button><button class="habit" data-habit="Read daily" data-streak="8"><span class="habit-icon purple">◒</span><b>Read daily</b><small><strong>8</strong> day streak</small><div class="mini-progress"><i style="width:54%"></i></div><span class="habit-status">Check in</span></button><button class="habit" data-habit="Drink water" data-streak="24"><span class="habit-icon green">⌇</span><b>Drink water</b><small><strong>24</strong> day streak</small><div class="mini-progress"><i style="width:94%"></i></div><span class="habit-status">Check in</span></button></div></section>
+      <section class="card focus-card"><div><p class="eyebrow">FOCUS FOR TODAY</p><h2>What matters most?</h2><p>Set one clear intention for your day.</p></div><button id="set-focus">Set my focus <span>→</span></button></section>
+    </section>
+  </main>
+  <dialog id="routine-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><p class="eyebrow">NEW ROUTINE</p><h2>Add a mindful moment</h2><label>Routine name<input id="new-routine-name" required placeholder="e.g. Evening walk"></label><label>Time<input id="new-routine-time" type="time" value="19:00"></label><button class="save-routine" value="default">Add to today</button></form></dialog>
+  <dialog id="account-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><p class="eyebrow">ACCOUNT</p><h2>Your profile</h2><label>Display name<input id="account-name" value="Deepak Kumar"></label><label>Email address<input id="account-email" type="email" value="deepak@example.com"></label><button class="save-routine" value="default">Save changes</button></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="index.js"></script>
 </body>
 </html>
