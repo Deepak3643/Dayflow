@@ -69,7 +69,7 @@ h1 em { color: var(--green); font-weight: 600; }
 .routine-actions.open .routine-menu { display: grid; gap: 2px; }
 .routine-menu button { padding: 7px 8px; border: 0; border-radius: 5px; background: transparent; color: var(--ink); cursor: pointer; font: 12px 'DM Sans'; text-align: left; }
 .routine-menu button:hover { background: #f3f5f0; }.routine-menu [data-routine-action="delete"] { color: #ae4c43; }
-.calm { background: #eef3e8; color: #66805d; }.active { background: #fcecdf; color: #b36d3e; }.focus { background: #edeafb; color: #6c6394; }
+.active { background: #d9e1d2; color: #586e51; }.calm { background: #eef3e8; color: #66805d; }.fitness { background: #b0e7da; color: #287324; }.focus { background: #edeafb; color: #6c6394; }
 .complete-button, .focus-card button, .save-routine { width: 100%; margin-top: 16px; padding: 13px; border: 0; border-radius: 7px; background: var(--green); color: #fff; cursor: pointer; font: 600 13px 'DM Sans'; }
 
 /* Activity */
