@@ -7,7 +7,9 @@
   --cream: #f4eee1;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -16,7 +18,11 @@ body {
   font: 15px 'DM Sans', sans-serif;
 }
 
-.app-shell { max-width: 1200px; margin: auto; padding: 0 38px 44px; }
+.app-shell {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 38px 44px;
+}
 
 /* Header */
 .topbar { height: 84px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
@@ -62,13 +68,65 @@ h1 em { color: var(--green); font-weight: 600; }
 .routine-name { font-weight: 500; }
 .done .routine-name { color: #9aa098; text-decoration: line-through; }
 .routine-tag { padding: 5px 8px; border-radius: 20px; font: 10px 'DM Mono'; }
-.routine-actions { position: relative; }
-.routine-more { width: 25px; padding: 3px 0; border: 0; border-radius: 5px; background: transparent; color: #7a807a; cursor: pointer; font: 15px 'DM Sans'; letter-spacing: 1px; }
-.routine-more:hover, .routine-actions.open .routine-more { background: #f0f3ed; color: var(--green); }
-.routine-menu { display: none; position: absolute; z-index: 4; top: 29px; right: 0; width: 96px; padding: 5px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 8px 20px #26352920; }
-.routine-actions.open .routine-menu { display: grid; gap: 2px; }
-.routine-menu button { padding: 7px 8px; border: 0; border-radius: 5px; background: transparent; color: var(--ink); cursor: pointer; font: 12px 'DM Sans'; text-align: left; }
-.routine-menu button:hover { background: #f3f5f0; }.routine-menu [data-routine-action="delete"] { color: #ae4c43; }
+.routine-actions {
+  position: relative;
+}
+
+.routine-more {
+  width: 25px;
+  padding: 3px 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #7a807a;
+  cursor: pointer;
+  font: 15px 'DM Sans';
+  letter-spacing: 1px;
+}
+
+.routine-more:hover,
+.routine-actions.open .routine-more {
+  background: #f0f3ed;
+  color: var(--green);
+}
+
+.routine-menu {
+  display: none;
+  position: absolute;
+  z-index: 4;
+  top: 29px;
+  right: 0;
+  width: 96px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px #26352920;
+}
+
+.routine-actions.open .routine-menu {
+  display: grid;
+  gap: 2px;
+}
+
+.routine-menu button {
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: 12px 'DM Sans';
+  text-align: left;
+}
+
+.routine-menu button:hover {
+  background: #f3f5f0;
+}
+
+.routine-menu [data-routine-action="delete"] {
+  color: #ae4c43;
+}
 .active { background: #d9e1d2; color: #586e51; }.calm { background: #eef3e8; color: #66805d; }.fitness { background: #b0e7da; color: #287324; }.focus { background: #edeafb; color: #6c6394; }
 .complete-button, .focus-card button, .save-routine { width: 100%; margin-top: 16px; padding: 13px; border: 0; border-radius: 7px; background: var(--green); color: #fff; cursor: pointer; font: 600 13px 'DM Sans'; }
 
