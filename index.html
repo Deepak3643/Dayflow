@@ -13,7 +13,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#"><span class="brand-mark">d</span>dayflow</a>
+      <a class="brand" href="#"><span class="brand-mark">df</span><i>Dayflow</i></a>
       <div class="date-picker"><button id="previous-day" aria-label="Previous day">‹</button><span id="today-label"></span><button id="next-day" aria-label="Next day">›</button></div>
       <div class="profile"><button class="notification" id="notification-button" aria-label="Notifications">♧</button><button class="avatar" id="profile-button" aria-haspopup="true" aria-expanded="false">DK</button><div class="profile-menu" id="profile-menu"><strong>Deepak Kumar</strong><span>deepak@example.com</span><hr><button data-action="profile">My profile</button><button data-action="settings">Settings</button><button data-action="signout">Sign out</button></div></div>
     </header>
@@ -34,11 +34,11 @@
       <section class="card routines-card">
         <div class="section-heading"><div><p class="eyebrow">TODAY'S ROUTINE</p><h2>Good morning, Deepak</h2></div><button class="text-button" id="add-routine">+ Add routine</button></div>
         <div class="routine-list" id="routine-list">
-          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">07:00</span><span class="routine-name">Morning meditation</span><span class="routine-tag calm">Mindful</span></label>
-          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">07:20</span><span class="routine-name">Movement & stretch</span><span class="routine-tag active">Active</span></label>
-          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">08:00</span><span class="routine-name">Plan the day</span><span class="routine-tag focus">Focus</span></label>
-          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">12:30</span><span class="routine-name">Screen-free lunch</span><span class="routine-tag calm">Mindful</span></label>
-          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">18:00</span><span class="routine-name">Read for 30 minutes</span><span class="routine-tag focus">Focus</span></label>
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">08:00</span><span class="routine-name">Wake up</span><span class="routine-tag habit">Habit</span></label>
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">08:15</span><span class="routine-name">Morning meditation</span><span class="routine-tag calm">Mindfulness</span></label>
+          <label class="routine done"><input type="checkbox" checked><span class="checkmark"></span><span class="routine-time">07:20</span><span class="routine-name">Movement & stretch</span><span class="routine-tag fitness">Health</span></label>
+          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">12:30</span><span class="routine-name">Screen-free lunch</span><span class="routine-tag calm">Mindfulness</span></label>
+          <label class="routine"><input type="checkbox"><span class="checkmark"></span><span class="routine-time">23:45</span><span class="routine-name">Read for 30 minutes</span><span class="routine-tag focus">Productivity</span></label>
         </div>
         <button class="complete-button" id="complete-all">Complete all routines <span>→</span></button>
       </section>
@@ -57,7 +57,7 @@
       <section class="card focus-card"><div><p class="eyebrow">FOCUS FOR TODAY</p><h2>What matters most?</h2><p>Set one clear intention for your day.</p></div><button id="set-focus">Set my focus <span>→</span></button></section>
     </section>
   </main>
-  <dialog id="routine-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><p class="eyebrow">NEW ROUTINE</p><h2>Add a mindful moment</h2><label>Routine name<input id="new-routine-name" required placeholder="e.g. Evening walk"></label><label>Time<input id="new-routine-time" type="time" value="19:00"></label><button class="save-routine" value="default">Add to today</button></form></dialog>
+  <dialog id="routine-dialog"><form method="dialog"><button class="dialog-close" id="close-routine-dialog" type="button" aria-label="Close dialog">×</button><p class="eyebrow">NEW ROUTINE</p><h2>Add a routine/task</h2><label>Routine name<input id="new-routine-name" required placeholder="e.g. Evening walk"></label><label>Time<input id="new-routine-time" type="time" value="HH:MM"></label><fieldset class="category-picker"><legend>Category <small>(optional)</small></legend><div class="category-options"><button type="button" data-category="Habit">Habit</button><button type="button" data-category="Mindfulness">Mindfulness</button><button type="button" data-category="Health">Health</button><button type="button" data-category="Career">Career</button><button type="button" data-category="Digital Wellbeing">Digital Wellbeing</button><button type="button" data-category="Self care">Self care</button><button type="button" data-category="Productivity">Productivity</button><button type="button" data-category="Social">Social</button><button type="button" data-category="Hobbies">Hobbies</button><button type="button" data-category="Challenge">Challenge</button><button type="button" data-category="Others">Others</button></div></fieldset><button class="save-routine" value="default">Add to today</button></form></dialog>
   <dialog id="account-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><p class="eyebrow">ACCOUNT</p><h2>Your profile</h2><label>Profile picture<input id="account-photo" type="file" accept="image/*"></label><label>Display name<input id="account-name" value="Deepak Kumar"></label><label>Email address<input id="account-email" type="email" value="deepak@example.com"></label><button class="save-routine" value="default">Save changes</button></form></dialog>
   <div class="toast" id="toast" role="status"></div>
   <script src="index.js"></script>

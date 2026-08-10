@@ -4,6 +4,9 @@ const routineDialog = document.getElementById('routine-dialog');
 const accountDialog = document.getElementById('account-dialog');
 let selectedDate = new Date();
 let user = JSON.parse(localStorage.getItem('dayflow-user') || 'null');
+let routineBeingEdited = null;
+let selectedRoutineCategory = '';
+let routineCategoryTouched = false;
 
 if (!user?.signedIn) window.location.replace('login.html');
 
@@ -42,7 +45,7 @@ function renderDate() {
 function updateProgress() {
   const routines = [...document.querySelectorAll('.routine input')];
   const completed = routines.filter(item => item.checked).length;
-  const percent = Math.round((completed / routines.length) * 100);
+  const percent = routines.length ? Math.round((completed / routines.length) * 100) : 0;
   score.textContent = percent;
   progressText.textContent = `${completed} of ${routines.length} complete`;
   document.querySelector('.score-ring').style.background = `conic-gradient(var(--green) ${percent}%, #c6d3c1 0)`;
@@ -55,28 +58,126 @@ function bindRoutine(input) {
   });
 }
 
-document.querySelectorAll('.routine input').forEach(bindRoutine);
+function addRoutineMenu(routine) {
+  if (routine.querySelector('.routine-actions')) return;
+  const actions = document.createElement('span');
+  actions.className = 'routine-actions';
+  actions.innerHTML = `<button class="routine-more" type="button" aria-label="Routine options" aria-haspopup="true" aria-expanded="false">•••</button><span class="routine-menu"><button type="button" data-routine-action="edit">Edit</button><button type="button" data-routine-action="delete">Delete</button></span>`;
+  routine.append(actions);
+}
+
+function setupRoutine(routine) {
+  bindRoutine(routine.querySelector('input'));
+  addRoutineMenu(routine);
+}
+
+function setRoutineCategory(category = '', touched = false) {
+  if (touched) routineCategoryTouched = true;
+  selectedRoutineCategory = category;
+  document.querySelectorAll('.category-options button').forEach(button => button.classList.toggle('selected', button.dataset.category === category));
+}
+
+document.querySelectorAll('.routine').forEach(setupRoutine);
 document.getElementById('complete-all').addEventListener('click', () => {
   document.querySelectorAll('.routine input').forEach(input => { input.checked = true; input.closest('.routine').classList.add('done'); });
   updateProgress();
   toast('All routines complete — wonderful work!');
 });
 
-document.getElementById('add-routine').addEventListener('click', () => routineDialog.showModal());
+document.getElementById('add-routine').addEventListener('click', () => {
+  routineBeingEdited = null;
+  routineCategoryTouched = false;
+  setRoutineCategory();
+  document.querySelector('#routine-dialog .eyebrow').textContent = 'NEW ROUTINE';
+  document.querySelector('#routine-dialog h2').textContent = 'Add a mindful moment';
+  document.querySelector('#routine-dialog .save-routine').textContent = 'Add to today';
+  routineDialog.showModal();
+});
+document.getElementById('close-routine-dialog').addEventListener('click', () => {
+  routineBeingEdited = null;
+  routineDialog.close('cancel');
+});
+document.querySelector('.category-options').addEventListener('click', event => {
+  const button = event.target.closest('[data-category]');
+  if (!button) return;
+  setRoutineCategory(selectedRoutineCategory === button.dataset.category ? '' : button.dataset.category, true);
+});
 routineDialog.addEventListener('close', () => {
   if (routineDialog.returnValue !== 'default') return;
   const name = document.getElementById('new-routine-name').value.trim();
   const time = document.getElementById('new-routine-time').value;
   if (!name) return;
+  if (routineBeingEdited) {
+    routineBeingEdited.querySelector('.routine-name').textContent = name;
+    routineBeingEdited.querySelector('.routine-time').textContent = time;
+    const existingTag = routineBeingEdited.querySelector('.routine-tag');
+    if (routineCategoryTouched) {
+      if (selectedRoutineCategory) {
+        if (existingTag) existingTag.textContent = selectedRoutineCategory;
+        else {
+          const tag = document.createElement('span');
+          tag.className = 'routine-tag focus';
+          tag.textContent = selectedRoutineCategory;
+          routineBeingEdited.querySelector('.routine-actions').before(tag);
+        }
+      } else existingTag?.remove();
+    }
+    routineBeingEdited = null;
+    toast('Routine updated.');
+    return;
+  }
   const item = document.createElement('label');
   item.className = 'routine';
-  item.innerHTML = `<input type="checkbox"><span class="checkmark"></span><span class="routine-time">${time}</span><span class="routine-name"></span><span class="routine-tag focus">Focus</span>`;
+  item.innerHTML = `<input type="checkbox"><span class="checkmark"></span><span class="routine-time">${time}</span><span class="routine-name"></span>`;
   item.querySelector('.routine-name').textContent = name;
-  bindRoutine(item.querySelector('input'));
+  if (selectedRoutineCategory) {
+    const tag = document.createElement('span');
+    tag.className = 'routine-tag focus';
+    tag.textContent = selectedRoutineCategory;
+    item.append(tag);
+  }
+  setupRoutine(item);
   document.getElementById('routine-list').append(item);
   document.getElementById('new-routine-name').value = '';
+  setRoutineCategory();
   updateProgress();
   toast('Routine added to today.');
+});
+
+document.getElementById('routine-list').addEventListener('click', event => {
+  const button = event.target.closest('.routine-more, [data-routine-action]');
+  if (!button) return;
+  event.preventDefault();
+  event.stopPropagation();
+  const routine = button.closest('.routine');
+  const actions = routine.querySelector('.routine-actions');
+  if (button.classList.contains('routine-more')) {
+    const isOpen = actions.classList.toggle('open');
+    button.setAttribute('aria-expanded', isOpen);
+    document.querySelectorAll('.routine-actions.open').forEach(item => {
+      if (item !== actions) { item.classList.remove('open'); item.querySelector('.routine-more').setAttribute('aria-expanded', 'false'); }
+    });
+    return;
+  }
+  if (button.dataset.routineAction === 'delete') {
+    routine.remove();
+    updateProgress();
+    toast('Routine deleted.');
+    return;
+  }
+  routineBeingEdited = routine;
+  routineCategoryTouched = false;
+  document.getElementById('new-routine-name').value = routine.querySelector('.routine-name').textContent;
+  document.getElementById('new-routine-time').value = routine.querySelector('.routine-time').textContent;
+  setRoutineCategory(routine.querySelector('.routine-tag')?.textContent || '');
+  document.querySelector('#routine-dialog .eyebrow').textContent = 'EDIT ROUTINE';
+  document.querySelector('#routine-dialog h2').textContent = 'Update your routine';
+  document.querySelector('#routine-dialog .save-routine').textContent = 'Save changes';
+  routineDialog.showModal();
+});
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.routine-actions')) document.querySelectorAll('.routine-actions.open').forEach(item => item.classList.remove('open'));
 });
 
 document.getElementById('set-focus').addEventListener('click', () => {
